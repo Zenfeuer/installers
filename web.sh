@@ -24,25 +24,53 @@ validate_parameters()
         case $1 in -s | -S | --server )
 
             shift
-            SERVER=$1
+
+            if [[ $1 == "apache2" || $1 == "nginx" ]]; then
+                SERVER=$1
+            else
+                echo -e "${RED}Wrong server given: ${RESET}$1"
+                echo -e "${LYELLOW}Valid options: ${RESET}apache2, nginx"
+                exit 1
+            fi
             ;;
 
             -d | -D | --database )
 
             shift
-            DATABASE=$1
+
+            if [[ $1 == "mysql" || $1 == "mariadb" ]]; then
+                DATABASE=$1
+            else
+                echo -e "${RED}Wrong database given: ${RESET}$1"
+                echo -e "${LYELLOW}Valid options: ${RESET}mysql, mariadb, postgress"
+                exit 1
+            fi
             ;;
 
             -f | -F | --framework )
         
             shift
-            FRAMEWORK=$1
+
+            if [[ $1 == "laravel" ]]; then
+                FRAMEWORK=$1
+            else
+                echo -e "${RED}Wrong framework given: ${RESET}$1"
+                echo -e "${LYELLOW}Valid options: ${RESET}laravel"
+                exit 1
+            fi
             ;;
 
             -pv | -PV | --phpv )
         
             shift
-            PHPV=$1
+            
+            if [[ $1 == "7.2" ]]; then
+                PHPV=$1
+            else
+                echo -e "${RED}Wrong PHP version given: ${RESET}$1"
+                echo -e "${LYELLOW}Valid options: ${RESET}7.2"
+                exit 1
+            fi
             ;;
 
             -v | -V | --verbose )
@@ -80,7 +108,7 @@ else
 
     else
         
-        validate_parameters
+        validate_parameters $*
 
     fi
 
@@ -92,7 +120,7 @@ else
     echo -e "  * $FRAMEWORK"
     echo -e "${RESET}"
 
-    echo -en "${YELLOW}Confirm installation?${RESET} (Y/N) >"
+    echo -en "${YELLOW}Confirm installation?${RESET} (Y/N) > "
 
     read RESPONSE
 
