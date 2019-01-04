@@ -17,11 +17,60 @@ PHPV="7.2"              # Default PHP version
 VERBOSE=false           # Default false
 RESPONSE=               # User response
 
+
+validate_parameters()
+{
+    while [ "$1" != "" ]; do
+        case $1 in -s | -S | --server )
+
+            shift
+            SERVER=$1
+            ;;
+
+            -d | -D | --database )
+
+            shift
+            DATABASE=$1
+            ;;
+
+            -f | -F | --framework )
+        
+            shift
+            FRAMEWORK=$1
+            ;;
+
+            -pv | -PV | --phpv )
+        
+            shift
+            PHPV=$1
+            ;;
+
+            -v | -V | --verbose )
+        
+            VERBOSE=true
+            ;;
+
+            * ) 
+            
+            echo -e "${RED}Wrong parameter given: ${RESET}$1"
+            exit 1
+        esac
+        shift
+    done
+}
+
+install_packages()
+{
+    echo -e "${LGREEN}Installing packages...${RESET}"
+}
+
+
 # if first parameter is help, show help doc and ignore the following given commands
 if [[ $1 == "--help" || $1 == "-h" ]]; then
     # TODO: Write helping doc
     echo "Helping"
-elif [[ 1 ]]; then
+
+else
 
     # Using default preset parameters and notify it
     if [[ $# -eq 0 ]]; then
@@ -29,45 +78,9 @@ elif [[ 1 ]]; then
         echo -en "${BYELLOW}Warning:${RESET}"
         echo -e "${YELLOW} Working with default parameters.${RESET}"
 
-    elif [[ 1 ]]; then
+    else
         
-        while [ "$1" != "" ]; do
-            case $1 in -s | -S | --server )
-
-                shift
-                SERVER=$1
-                ;;
-
-                -d | -D | --database )
-
-                shift
-                DATABASE=$1
-                ;;
-
-                -f | -F | --framework )
-            
-                shift
-                FRAMEWORK=$1
-                ;;
-
-                -pv | -PV | --phpv )
-            
-                shift
-                PHPV=$1
-                ;;
-
-                -v | -V | --verbose )
-            
-                VERBOSE=true
-                ;;
-
-                * ) 
-                
-                echo -e "${RED}Wrong parameter given: ${RESET}$1"
-                exit 1
-            esac
-            shift
-        done
+        validate_parameters
 
     fi
 
@@ -88,7 +101,9 @@ elif [[ 1 ]]; then
         echo -e "${CYAN}Bye!${RESET}"
         exit 1
     else
-        echo "YES!!!!"
+        
+        install_packages
+
     fi
 
 fi
