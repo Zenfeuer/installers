@@ -124,7 +124,7 @@ else
 
     read RESPONSE
 
-    if [[ $RESPONSE != "Y" ]]; then
+    if [[ $RESPONSE != "Y" && $RESPONSE != "y" && $RESPONSE != "yes" && $RESPONSE != "YES" ]]; then
         echo -e "${LYELLOW}Nothing was installed.${RESET}"
         echo -e "${CYAN}Bye!${RESET}"
         exit 1
