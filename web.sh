@@ -87,9 +87,29 @@ validate_parameters()
     done
 }
 
+install_server()
+{
+    if [[ $SERVER == "apache2" ]]; then
+        
+        sudo apt install apache2 -y
+        sudo systemctl stop apache2.service -y
+        sudo systemctl start apache2.service -y
+        sudo systemctl enable apache2.service -y
+
+    #elif [[ $SERVER == "nginx" ]]; then
+
+    fi
+}
+
 install_packages()
 {
+    echo -e "${LYELLOW}Updating apt...${RESET}"
+
+    sudo apt update
+
     echo -e "${LGREEN}Installing packages...${RESET}"
+
+    install_server
 }
 
 
