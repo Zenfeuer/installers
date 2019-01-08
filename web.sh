@@ -92,8 +92,17 @@ validate_parameters()
     done
 }
 
+log()
+{
+    if [[ $VERBOSE ]]; then
+        echo -e "${GREEN}$1${RESET}"
+    fi
+}
+
 install_server()
 {
+    log "Installing $SERVER..." 1
+
     if [[ $SERVER == "apache2" ]]; then
         
         sudo apt install apache2 -y
@@ -111,6 +120,11 @@ install_server()
     fi
 }
 
+install_php()
+{
+    echo -e "Installing php"
+}
+
 install_packages()
 {
     echo -e "${LYELLOW}Updating apt...${RESET}"
@@ -120,6 +134,8 @@ install_packages()
     echo -e "${LGREEN}Installing packages...${RESET}"
 
     install_server
+
+    install_php
 }
 
 
