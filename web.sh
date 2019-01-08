@@ -10,6 +10,11 @@ RESET="\e[0m"
 
 echo -e "${CYAN}Web Environment Installer v0.1${RESET}\n"
 
+if [ "$EUID" -ne 0 ]; then
+    echo -en "${BYELLOW}Warning:${RESET}"
+    echo -e "${YELLOW} It's recommended run this script with sudo or as root user.${RESET}\n"
+fi
+
 SERVER="apache2"        # Default apache2
 DATABASE="mysql"        # Default mysql
 FRAMEWORK="laravel"     # Default laravel
@@ -129,7 +134,7 @@ else
     if [[ $# -eq 0 ]]; then
 
         echo -en "${BYELLOW}Warning:${RESET}"
-        echo -e "${YELLOW} Working with default parameters.${RESET}"
+        echo -e "${YELLOW} Working with default parameters.${RESET}\n"
 
     else
         
